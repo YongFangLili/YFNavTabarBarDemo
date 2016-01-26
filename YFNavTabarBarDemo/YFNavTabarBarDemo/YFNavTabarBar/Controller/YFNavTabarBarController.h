@@ -21,6 +21,6 @@
 
 
 //添加子视图的方法
-
+-(void)addPresentViewController:(UIViewController *)VC WithIndex:(NSInteger)index;
 
 @end

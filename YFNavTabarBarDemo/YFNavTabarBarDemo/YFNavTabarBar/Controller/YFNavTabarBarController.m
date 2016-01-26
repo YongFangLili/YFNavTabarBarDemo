@@ -14,6 +14,9 @@
 /** 顶部标题 */
 @property (nonatomic, strong) UIScrollView *titleScroolView;
 
+/** 显示子控制器部分视图*/
+@property (nonatomic, strong) UIView*mainView;
+
 /** 滑块 */
 @property (nonatomic, strong) UIView *slipper;
 
@@ -26,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titlesArray = @[@"标题1",@"标题2",@"标题3",@"标题4",@"标题5",@"标题6",@"标题7",@"标题8",@"标题9",];
+    self.titlesArray = @[@"标题1",@"标题2标题2标题2标题2标题2",@"标题3",@"标题4",@"标题5",@"标题6",@"标题7",@"标题8",@"标题9",];
     //初始化
     [self setUpbtns:self.titlesArray];
     
@@ -77,12 +80,20 @@
 
 #pragma mark-响应按钮点击事件
 -(void)clickBtnToChangeController:(UITapGestureRecognizer *)tap {
-    
 
     //切换滑块
     NSInteger index = tap.view.tag - 1000;
-    
     [self showLineWithButtonWidth:[self.itemsWidths[index] floatValue] withIndex:index];
+}
+
+
+
+-(void)addPresentViewController:(UIViewController *)VC WithIndex:(NSInteger)index{
+    
+    [self addChildViewController:self.subViewControllers[index]];
+    [self.mainView addSubview:[self.subViewControllers[index] view]];
+    [VC addChildViewController:self];
+    [VC.view addSubview:self.view];
 
 }
 
@@ -157,7 +168,16 @@
     return _slipper;
 }
 
-
+-(UIView *)mainView {
+    
+    if(!_mainView){
+        
+        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.titleScroolView.frame), KScreenWidth, KScreenHeight - CGRectGetMaxY(self.titleScroolView.frame))];
+        _mainView.backgroundColor = [UIColor purpleColor];
+        [self.view addSubview:_mainView];
+    }
+    return _mainView;
+}
 
 
 

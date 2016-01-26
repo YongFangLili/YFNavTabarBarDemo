@@ -16,15 +16,7 @@
 @end
 
 @implementation ViewController
--(void)clicklabel:(UITapGestureRecognizer *)tap{
 
-
-}
-
-//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//
-//
-//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -65,17 +57,13 @@
     ninghtViewController.view.backgroundColor = [UIColor redColor];
     YFNavTabarBarController *nav = [[YFNavTabarBarController alloc]init];
     self.nav = nav;
+    nav.subViewControllers = @[oneViewController,twoViewController,threeViewController,fourViewController,fiveViewController,sixViewController,sevenViewController,eightViewController,ninghtViewController];
     self.view.backgroundColor = [UIColor redColor];
-    [self.view addSubview:nav.view];
+    [nav addPresentViewController:self WithIndex:0];
+//    [self.view addSubview:nav.view];
     
     
-    UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clicklabel:)];
-    tap.numberOfTapsRequired = 1;
-    [self.view addSubview:la];
-    [la addGestureRecognizer:tap];
-    la.userInteractionEnabled = YES;
-    la.backgroundColor = [UIColor whiteColor];
+   
     // Do any additional setup after loading the view, typically from a nib.
 }
 
