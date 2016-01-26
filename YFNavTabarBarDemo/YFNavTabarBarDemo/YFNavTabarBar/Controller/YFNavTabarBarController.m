@@ -9,7 +9,7 @@
 #import "YFNavTabarBarController.h"
 #import "YFHeader.h"
 
-@interface YFNavTabarBarController ()<UIGestureRecognizerDelegate>
+@interface YFNavTabarBarController ()<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 
 /** 顶部标题 */
 @property (nonatomic, strong) UIScrollView *titleScroolView;
@@ -24,7 +24,6 @@
 
 //记录当前的 控制器
 @property (nonatomic, strong) UIViewController *currentController;
-
 
 @end
 
@@ -68,9 +67,10 @@
         buttonX += [self.itemsWidths[i] floatValue];
     
     }
+    
 
     self.LablxArray = labelArray;
-    self.titleScroolView.contentSize = CGSizeMakeCustom(buttonX, 44.0f);
+    self.titleScroolView.contentSize = CGSizeMakeCustom(buttonX, 0);
     [self showLineWithButtonWidth:[self.itemsWidths[0] floatValue] withIndex:0];
 
 }
@@ -90,8 +90,10 @@
     [self addPresentViewController:self.currentController WithIndex:index];
 }
 
+#pragma mark -改变 contenoffset
 
 
+#pragma mark -切换控制器
 -(void)addPresentViewController:(UIViewController *)VC WithIndex:(NSInteger)index{
     
     _currentController = VC;
@@ -128,10 +130,34 @@
 #pragma mark -滑块的显示
 - (void)showLineWithButtonWidth:(CGFloat)width withIndex:(NSInteger)index;
 {
-    CGFloat labelX = [self.LablxArray[index] integerValue];
-    self.slipper.frame = CGRectMakeCustom(labelX, 40.0f, width, 3.0f);
+    CGFloat labelX = [self.LablxArray[index] floatValue];
+    [UIView animateWithDuration:0.3 animations:^{
+        //改变 cotentoffset
+        self.titleScroolView.contentOffset = CGPointMake(labelX, 0);
+
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.1 animations:^{
+            self.slipper.frame = CGRectMakeCustom(labelX, 40.0f, width, 3.0f);
+        }];
+        
+    }];
+    
+    
+   
 }
 
+
+#pragma mark -UIScrollviewDelegate
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//
+//NSLog(@"%f",scrollView.contentOffset.x);
+//}
+//-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+//
+//    NSLog(@"%f",scrollView.contentOffset.x);
+//
+//}
 
 #pragma mark - 懒加载
 -(UIScrollView *)titleScroolView{
@@ -141,9 +167,12 @@
         _titleScroolView = [[UIScrollView alloc]initWithFrame:CGRectMakeCustom(0, 0,KScreenWidth , 44.0f)];
         
         [self.view addSubview:_titleScroolView];
-        
+        _titleScroolView.delegate = self;
+//        _titleScroolView.pagingEnabled = YES;
         _titleScroolView.backgroundColor = [UIColor cyanColor];
         _titleScroolView.userInteractionEnabled = YES;
+        _titleScroolView.bounces = NO;
+        _titleScroolView.showsVerticalScrollIndicator = NO;
     }
     return _titleScroolView;
 }
@@ -168,13 +197,9 @@
             
             [titleA addObject: vc.title];
         }
-        
         _titlesArray = titleA;
     }
-
-
     return _titlesArray;
-
 }
 
 
@@ -193,14 +218,12 @@
 -(UIView *)mainView {
     
     if(!_mainView){
-        
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.titleScroolView.frame), KScreenWidth, KScreenHeight - CGRectGetMaxY(self.titleScroolView.frame))];
         _mainView.backgroundColor = [UIColor purpleColor];
+        
         [self.view addSubview:_mainView];
     }
     return _mainView;
 }
-
-
 
 @end
