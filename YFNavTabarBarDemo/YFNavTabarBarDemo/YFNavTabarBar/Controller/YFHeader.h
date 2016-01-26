@@ -23,5 +23,6 @@
 #define LENGTH_4INCH_ADAPTED(l) l
 #define DIDSELECTEDHISTORYCELL  @"DIDSELECTEDHISTORYCELL"
 #define DIDSELECTHOTSEARCHCELL  @"DIDSELECTHOTSEARCHCELL"
+#define UIColorWithRGBA(r,g,b,a)        [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
 
 #endif /* YFHeader_h */

@@ -10,4 +10,17 @@
 
 @interface YFNavTabarBarController : UIViewController
 
+/**子控制器数组*/
+@property (nonatomic,strong) NSArray *subViewControllers;
+
+/**标题数组数组*/
+@property (nonatomic, strong) NSArray *titlesArray;
+
+/**宽度数组*/
+@property (nonatomic, strong) NSArray *itemsWidths;
+
+
+//添加子视图的方法
+
+
 @end
