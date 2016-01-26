@@ -22,6 +22,9 @@
 
 @property (nonatomic, strong) NSArray *LablxArray;
 
+//记录当前的 控制器
+@property (nonatomic, strong) UIViewController *currentController;
+
 
 @end
 
@@ -29,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titlesArray = @[@"标题1",@"标题2标题2标题2标题2标题2",@"标题3",@"标题4",@"标题5",@"标题6",@"标题7",@"标题8",@"标题9",];
+//    self.titlesArray = @[@"标题1",@"标题2标题2标题2标题2标题2",@"标题3",@"标题4",@"标题5",@"标题6",@"标题7",@"标题8",@"标题9",];
     //初始化
     [self setUpbtns:self.titlesArray];
     
@@ -84,11 +87,14 @@
     //切换滑块
     NSInteger index = tap.view.tag - 1000;
     [self showLineWithButtonWidth:[self.itemsWidths[index] floatValue] withIndex:index];
+    [self addPresentViewController:self.currentController WithIndex:index];
 }
 
 
 
 -(void)addPresentViewController:(UIViewController *)VC WithIndex:(NSInteger)index{
+    
+    _currentController = VC;
     
     [self addChildViewController:self.subViewControllers[index]];
     [self.mainView addSubview:[self.subViewControllers[index] view]];
@@ -109,8 +115,6 @@
     
     for (NSString *title in titles)
     {
-//        CGSize size = [title sizeWithAttributes:<#(nullable NSDictionary<NSString *,id> *)#>]
-//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
         
        CGSize size =  [title boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         
@@ -153,6 +157,24 @@
     }
     
     return _itemsWidths;
+}
+
+-(NSArray *)titlesArray {
+
+    if (!_titlesArray) {
+        NSMutableArray *titleA = [NSMutableArray array];
+        
+        for (UIViewController *vc in self.subViewControllers) {
+            
+            [titleA addObject: vc.title];
+        }
+        
+        _titlesArray = titleA;
+    }
+
+
+    return _titlesArray;
+
 }
 
 
