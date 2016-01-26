@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIScrollView *titleScroolView;
 
 /** 显示子控制器部分视图*/
-@property (nonatomic, strong) UIView*mainView;
+@property (nonatomic, strong) UIScrollView*mainView;
 
 /** 滑块 */
 @property (nonatomic, strong) UIView *slipper;
@@ -24,6 +24,9 @@
 
 //记录当前的 控制器
 @property (nonatomic, strong) UIViewController *currentController;
+
+// 当前的的索引
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 
@@ -147,24 +150,40 @@
    
 }
 
+#pragma mark -添加 mainView 的内容
+-(void)setUpMainViewUI {
+    
+    for (int i = 0; i<self.subViewControllers.count; i++) {
+        
+        UIViewController *VC = self.subViewControllers[i];
+        
+        VC.view.frame = CGRectMake(i * KScreenWidth,0, KScreenWidth, _mainView.frame.size.height);
+        
+        [self.mainView addSubview:VC.view];
+        
+        [self addChildViewController:VC];
+    }
+    
+}
+
 
 #pragma mark -UIScrollviewDelegate
-//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//
-//NSLog(@"%f",scrollView.contentOffset.x);
-//}
-//-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
-//
-//    NSLog(@"%f",scrollView.contentOffset.x);
-//
-//}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    //设置当前的 index
+    
+
+
+
+
+}
 
 #pragma mark - 懒加载
 -(UIScrollView *)titleScroolView{
     
     if (!_titleScroolView) {
         
-        _titleScroolView = [[UIScrollView alloc]initWithFrame:CGRectMakeCustom(0, 0,KScreenWidth , 44.0f)];
+        _titleScroolView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , 44.0f * AutoSizeScaleY)];
         
         [self.view addSubview:_titleScroolView];
         _titleScroolView.delegate = self;
@@ -215,12 +234,13 @@
     return _slipper;
 }
 
--(UIView *)mainView {
+-(UIScrollView *)mainView {
     
     if(!_mainView){
-        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.titleScroolView.frame), KScreenWidth, KScreenHeight - CGRectGetMaxY(self.titleScroolView.frame))];
+        _mainView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.titleScroolView.frame), KScreenWidth, KScreenHeight - CGRectGetMaxY(self.titleScroolView.frame))];
+        _mainView.contentSize = CGSizeMakeCustom(self.subViewControllers.count * KScreenWidth, 0);
         _mainView.backgroundColor = [UIColor purpleColor];
-        
+        _mainView.delegate = self;
         [self.view addSubview:_mainView];
     }
     return _mainView;
