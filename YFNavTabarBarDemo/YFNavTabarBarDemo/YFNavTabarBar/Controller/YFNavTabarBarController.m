@@ -163,6 +163,7 @@
         
     }];
     self.mainView.contentOffset = CGPointMake(index * KScreenWidth, 0);
+    [self.mainView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:NO];
     
 }
 
@@ -205,6 +206,7 @@
 
     //设置当前的 index
    NSInteger currentIndex = (scrollView.contentOffset.x + KScreenWidth / 2.0f) / KScreenWidth;
+    NSLog(@"%ld",(long)currentIndex);
     
 //    CGFloat X = (scrollView.contentOffset.x - currentIndex * KScreenWidth) + KScreenWidth / 2.0
 //    self.mainView.contentOffset = CGPointMake(currentIndex * KScreenWidth, 0);
@@ -218,6 +220,11 @@
 
 }
 
+//-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+//{
+//    CGPoint offset = scrollView.contentOffset;
+//    [_mainView setContentOffset:offset animated:NO];
+//}
 
 
 #pragma mark - 懒加载
