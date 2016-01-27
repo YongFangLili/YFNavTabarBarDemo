@@ -232,7 +232,7 @@
     
     if (!_titleScroolView) {
         
-        _titleScroolView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , 44.0f * AutoSizeScaleY)];
+        _titleScroolView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,64.0f ,KScreenWidth , 44.0f * AutoSizeScaleY)];
         
         [self.view addSubview:_titleScroolView];
 //        _titleScroolView.delegate = self;

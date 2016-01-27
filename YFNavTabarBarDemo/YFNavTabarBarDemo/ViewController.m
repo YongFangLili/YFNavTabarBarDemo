@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController *oneViewController = [[UIViewController alloc] init];
+    UITableViewController *oneViewController = [[UITableViewController alloc] init];
     oneViewController.title = @"新闻";
     UITextField *text1 = [[UITextField alloc]initWithFrame:CGRectMake(200, 200, 200, 200)];
     text1.text = oneViewController.title;
