@@ -93,6 +93,7 @@
     self.nav = nav;
     nav.subViewControllers = @[oneViewController,twoViewController,threeViewController,fourViewController,fiveViewController,sixViewController,sevenViewController,eightViewController,ninghtViewController];
     self.view.backgroundColor = [UIColor redColor];
+    self.title = @"首页";
     [nav addPresentViewController:self WithIndex:0];
 //    [self.view addSubview:nav.view];
     

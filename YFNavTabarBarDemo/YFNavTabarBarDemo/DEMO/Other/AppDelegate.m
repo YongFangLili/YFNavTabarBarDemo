@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MainTabarController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    
+    //设置根控制器
+    MainTabarController *mainVC = [[MainTabarController alloc]init];
+    
+//    mainVC.view.backgroundColor = [UIColor redColor];
+    
+    
+    self.window.rootViewController = mainVC;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
