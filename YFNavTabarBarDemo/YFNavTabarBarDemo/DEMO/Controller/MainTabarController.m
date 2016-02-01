@@ -44,8 +44,8 @@
     UIViewController *MineVc = [[UIViewController alloc] init];
     MineVc.view.backgroundColor = [UIColor magentaColor];
     MineVc.title = @"我";
-    UINavigationController *MineNav = [[UINavigationController alloc]initWithRootViewController:MineVc];
-    [self addChildViewController:MineNav];
+    UINavigationController *MineNaV = [[UINavigationController alloc]initWithRootViewController:MineVc];
+    [self addChildViewController:MineNaV];
 
 }
 
